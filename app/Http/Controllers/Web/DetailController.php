@@ -20,15 +20,6 @@ class DetailController extends Controller
 
     public function show($product_id)
     {
-
-        // dd(Session::get('cart'));
-        // Session::forget('cart');
-
-        // foreach(Session::get('cart')->_items as $values)
-        // {
-        //     print_r($values['product']);
-        // }
-
         $sideCategories = Category::where('is_feature', 1)->get(); //get all category
 
         $product = Product::where('id', $product_id)->first();
@@ -42,6 +33,13 @@ class DetailController extends Controller
         
         return view('web.detail', compact('product', 'sideCategories', 'relatedProducts', 'paymentMethods'));
     }
+
+
+
+
+    
+
+    // end
 }
 
 

@@ -20,14 +20,9 @@ class CartController extends Controller
     
 
     public function index()
-    {
-
-         
+    {     
         //  side categories
         $sideCategories = Category::where('is_feature', 1)->get();
-
-      
-    //    dd(Session::get('cart'));
 
         return view("web.cart", compact('sideCategories'));
     }

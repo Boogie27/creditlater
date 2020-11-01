@@ -61,8 +61,8 @@
                                     <li><a href="#"><i class="fa fa-instagram"></i></a></li>
                                     <li><a href="#"><i class="fa fa-rss"></i></a></li>
                                 </ul>
-                                <form class="d-inline-block">
-                                    <button class="wishlist-btn"><i class="fa fa-heart"></i><span class="title-font">Add To WishList</span></button>
+                                <form action="{{ url('/add-to-wishlist') }}" method="post" class="d-inline-block">
+                                    <button class="wishlist-btn add-to-wishlist-btn" id="{{ $product->id }}" data-url="{{ url('/add-to-wishlist') }}"><i class="fa fa-heart"></i><span class="title-font">Add To WishList</span></button>
                                 </form>
                             </div>
                         </div>

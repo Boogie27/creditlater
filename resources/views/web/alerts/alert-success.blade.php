@@ -1,8 +1,4 @@
 
 
 <!-- cart alert success -->
-<section>
-    <div class="success">
-        
-    </div>
-</section>
+<div class="wishlist-redirect-error">{{ Session::get('error') }}</div>

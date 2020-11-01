@@ -1,6 +1,10 @@
 <?php
 use App\Models\Web\Rating;
 use App\Models\Web\Cart;
+use App\Models\Web\Wishlist;
+use App\Models\Web\Auth;
+
+use Illuminate\Support\Facades\DB;
 
     function star_rating($id)
     {
@@ -63,5 +67,41 @@ use App\Models\Web\Cart;
         if(count($user_cart)){
             $cart = $user_cart;
         }
-    return $cart;
- }
+        return $cart;
+    }
+
+
+
+    // wish list quantity
+    function wishlist_quantity(){
+        $quantity = 0;
+        if($user_id = Auth::user()['id'])
+        {
+            $old_wishList = WishList::where('user_id', $user_id)->get();  
+            if(count($old_wishList) != "")
+            {
+                foreach($old_wishList as $values)
+                {
+                    $quantity += $values->quantity;
+                }
+            }
+        }
+        return $quantity;
+    }
+
+
+  
+    // get wish list
+    function get_wish_list()
+    {
+        $wishlist_items = 0;
+        if($user_id = Auth::user()['id'])
+        {
+            $wishlist = DB::table('wishlists')->leftJoin('products', 'wishlists.product_id', '=', 'products.id')->where('user_id', $user_id)->get();
+            if(count($wishlist) != "")
+            {
+                $wishlist_items = $wishlist;
+            }
+        }
+        return $wishlist_items;
+    }

@@ -124,5 +124,28 @@ class ProductController extends Controller
     }
 
 
+
+
+
+
+    public function quick_view_ajax(Request $request)
+    {
+        if($request->ajax())
+        {
+            $product = Product::where('id', $request->product_id)->where('is_feature', 1)->first();
+        }
+        return view('web.common.get-ajax-quick-view', compact('product'));
+    }
+
+
+
+
+
+
+
+
+
+
+
     // end
 }

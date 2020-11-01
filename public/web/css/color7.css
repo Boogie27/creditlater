@@ -20928,3 +20928,29 @@ body.rtl {
         width: 100px;
     }
 }
+
+/* wishlist redirect error */
+.wishlist-redirect-error{
+    top: 2px;
+    right: 0px;
+    z-index: 100;
+    width: 400px;
+    padding: 20px 0px;
+    position: fixed;
+    color: orangered;
+    font-weight: 600;
+    text-align: center;
+    background-color: white;
+    border: 1px solid orangered;
+    transform: translate(400px);
+    transition: all 0.5s ease;
+}
+@media only screen and (max-width: 767px){
+    .wishlist-redirect-error{
+        top: -70px;
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid orangered;
+        transform: translate(0);
+    }
+}

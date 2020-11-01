@@ -1,6 +1,5 @@
 
 <!-- Add to wishlist bar -->
-<div id="wishlist_side" class="add_to_cart right side-wishlist-container">
     <a href="javascript:void(0)" class="overlay" onclick="closeWishlist()"></a>
     <div class="cart-inner">
         <div class="cart_top">
@@ -59,5 +58,4 @@
         </div>
         @endif
     </div>
-</div>
 <!-- Add to wishlist bar end-->

@@ -1,4 +1,44 @@
 $(document).ready(function(){
+
+// GET WISHLIST ALERT ERROR 
+// ----------------------------------------------
+var wishlistError = $(".wishlist-redirect-error");
+if($(wishlistError).text().length > 0){
+   // display error when screen is greater than 767px
+    if($(window).width() > 767){
+        $(wishlistError).css({
+            transform: 'translate(0)'
+        });
+        setTimeout(remove_alert_size, 4000);
+    
+        function remove_alert_size(){
+            $(wishlistError).css({
+                transform: 'translate(400px)'
+            });
+        }
+    }
+    
+    // display error when screen is less than 767px
+    if($(window).width() < 767){
+        $(wishlistError).css({
+            top: '0px'
+        });
+        setTimeout(remove_alert_top, 4000);
+    
+        function remove_alert_top(){
+            $(wishlistError).css({
+                top: '-70px'
+            });
+        }
+    }
+
+}
+
+
+
+
+
+
 // -----------------------------------------------
 // FUNCTION THAT HANDLES BRAND CHECK BUTTONS
 // -----------------------------------------------
@@ -105,11 +145,7 @@ var quickViewDropDwon = $("#quick_view_dropdown_modal");
         var product_id = $(this).attr("id");
         var url =  $(this).attr("href");
 
-        $.ajaxSetup({
-            headers: {
-                "X-CSRF-TOKEN": $("meta[name='csrf_token']").attr("content")
-            }
-        });
+        csrf_token()   // gets page csrf token
         
         
         $.ajax({
@@ -119,7 +155,7 @@ var quickViewDropDwon = $("#quick_view_dropdown_modal");
                 product_id: product_id
             },
             success: function (response){
-               $(quickViewDropDwon).html(response.data);
+                $("#quick_view_dropdown_modal").html(response)
             }
         });
 
@@ -198,9 +234,6 @@ $(addToCart).click(function(e){
 
     
     csrf_token()   // gets page csrf token
-    
-
-    
     
     $.ajax({
         url: url,
@@ -366,7 +399,8 @@ var deleteDropdownCartItem =    $('.cart_item_container');
 
 
 
-
+// SIDE LOGIN 
+// -------------------------------------------------------------
 var sideLoginBtn = $("#ajax_login_form");
 var sideLoginError = $(".side-login-error");
     $(sideLoginError).hide();
@@ -399,6 +433,204 @@ var sideLoginError = $(".side-login-error");
         });
 
     });
+
+
+
+
+
+
+// ADD TO WISH LIST IN DETAIL PAGE
+// ------------------------------------------------------
+var addToWishListBtn = $(".add-to-wishlist-btn");
+    $(addToWishListBtn).click(function(e){
+        e.preventDefault();
+
+        var id = $(this).attr('id');
+        var url = $(this).attr('data-url');
+        var size = $("#detail_product_size").val();
+        var quantity = $("#detail_qty_box").find("#product_qty").val();
+        var url_relocate = $("#get_wishlist_items").attr("data-url");
+
+        
+        csrf_token()   // gets page csrf token
+
+        $.ajax({
+            url: url,
+            method: "post",
+            data: {
+              product_id: id,
+              size: size,
+              quantity: quantity
+            },
+            success: function (response){
+               if(response.data){
+                   location.assign(url_relocate);
+               }
+            }
+        });
+    })
+
+
+
+
+
+// DELETE WISH LIST ITEM
+// ---------------------------------------------------------
+var deleteWishlistItem = $(".delete_wishlist_item");
+     $(deleteWishlistItem).click(function(e){
+        e.preventDefault();
+
+        var id = $(this).attr('id');
+        var url = $(this).attr('href');
+
+        csrf_token()   // gets page csrf token
+
+        $.ajax({
+            url: url,
+            method: "post",
+            data: {
+              product_id: id,
+            },
+            success: function (response){
+                if(response.data){
+                    location.reload();
+                }
+            }
+        });
+    });
+
+
+
+
+
+
+// QUICK ADD TO WISH LIST
+// ----------------------------------------------------------
+var quickAddToWishList = $(".quick-add-to-wishlist");
+    $(quickAddToWishList).click(function(e){
+        e.preventDefault();
+        var url = $(this).attr('data-url');
+        var id = $(this).attr('id');
+        var size = 'unspecified';
+        var quantity = 1;
+
+        csrf_token()   // gets page csrf token
+
+        $.ajax({
+            url: url,
+            method: "post",
+            data: {
+              product_id: id,
+              size: size,
+              quantity: quantity
+            },
+            success: function (response){
+               if(response.data){
+                    wishlist_quantity();
+                    get_wish_list();
+               }
+            }
+        });
+    });
+
+
+
+
+
+
+
+
+// WISH LIST QUANTYT
+// ----------------------------------------------------------
+   function wishlist_quantity(){
+       var url = $("#get_wishlist_items_quantity").attr('data-url');
+
+       csrf_token()   // gets page csrf token
+
+       $.ajax({
+           url: url,
+           method: "post",
+           data: {
+              quantity: 'quantity'
+           },
+           success: function (response){
+                $(".get-wishlist-qty").html(response.quantity+" item")
+           }
+       });
+   }
+
+
+
+
+
+
+
+
+   
+// GET WISH LIST
+// ------------------------------------------------------
+function get_wish_list(){
+    var url = $("#get_quick_wishlist_items").attr('data-url');
+
+    csrf_token()   // gets page csrf token
+
+    $.ajax({
+        url: url,
+        method: "post",
+        data: {
+           wishlist_items: 'wishlist_items'
+        },
+        success: function (response){
+             $(".side-wishlist-container").html(response)
+        }
+    });
+}
+
+
+
+
+
+
+   
+// GET WISH LIST
+// ------------------------------------------------------
+var quickDeleteWishList = $(".side-wishlist-container");
+    $(quickDeleteWishList).on("click", ".quick-delete-wishlist-item", function(e){
+        e.preventDefault();
+
+        var url = $(this).attr('href');
+        var id = $(this).attr('id');
+
+        csrf_token()   // gets page csrf token
+
+        $.ajax({
+            url: url,
+            method: "post",
+            data: {
+               product_id: id
+            },
+            success: function (response){
+                if(response.data){
+                    get_wish_list();
+                    wishlist_quantity();
+                }
+            }
+        });
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // end
 });

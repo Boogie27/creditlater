@@ -21,9 +21,14 @@ class LogoutController extends Controller
 
             $user_email = Auth::user()['email'];
             $user = User::where('email', $user_email)->first();
-            $user->active = 0;
-            $user->last_login = $date;
-            $user->save();
+            if(!$user)
+            {
+                Session::forget('user');
+            }else{
+                $user->active = 0;
+                $user->last_login = $date;
+                $user->save();
+            }
             
             Auth::logout();
         }

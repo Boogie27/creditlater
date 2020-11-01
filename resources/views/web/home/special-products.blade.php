@@ -27,10 +27,10 @@
                                      <button data-toggle="modal" class="quick-add-to-cartBtn" id="{{ $products->id }}" data-url="{{ url('/quick-add-to-cart') }}" data-target="#addtocart" title="Add to cart">
                                         <i class="ti-bag"></i>
                                     </button>
-                                    <a href="javascript:void(0)" title="Add to Wishlist">
+                                    <a href="javascript:void(0)" title="Add to Wishlist" id="{{ $products->id }}" data-url="{{ url('/quick-add-to-wishlist') }}" class="quick-add-to-wishlist">
                                         <i class="fa fa-heart" aria-hidden="true"></i>
                                     </a>
-                                    <a href="{{ url('/') }}" data-toggle="modal" class="quick-view-btn" data-target="#quick-view" title="Quick View"  id="{{ $products->id }}">
+                                    <a href="{{ url('/quick-view') }}" data-toggle="modal" class="quick-view-btn" data-target="#quick-view" title="Quick View" id="{{ $products->id }}">
                                         <i class="fa fa-search" aria-hidden="true"></i>
                                     </a>
                                 </div>

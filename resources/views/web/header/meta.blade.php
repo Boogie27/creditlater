@@ -44,3 +44,6 @@
 <div class="cart-url" id="cart_part" data-url="{{ url('/cart') }}"></div>    <!-- add to cart url -->
 <div class="cart-url" id="get_cart_quantity" data-url="{{ url('/get-cart-quantity') }}"></div>     <!-- get cart quantity url -->
 <div class="cart-url" id="get_cart_dropdown" data-url="{{ url('/get-cart-dropdown') }}"></div>     <!-- get cart dropdown url-->
+<div class="wishlist-url" id="get_wishlist_items" data-url="{{ url('/wishlist') }}"></div>     <!-- get wishlist url-->
+<div class="wishlist-url" id="get_wishlist_items_quantity" data-url="{{ url('/get-wishlist-quantity') }}"></div>     <!-- get wishlist url-->
+<div class="wishlist-url" id="get_quick_wishlist_items" data-url="{{ url('/get-quick-wishlist-items') }}"></div>     <!-- get quick wishlist url-->
